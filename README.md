@@ -1,2 +1,2 @@
 # PS_SysAdmin
-PowerShell Repo for SysAdmin Tools
+Useful tools, scripts and modules for a typical SysAdmin role.
