@@ -33,7 +33,7 @@ Function Get-RebootLogs {
                 $Params['MaxEvents'] = $EventCount
             }
             Write-Host "Collecting reboot logs from $($ComputerName)...." -ForegroundColor Cyan
-            Get-WinEvent @Params | Where-Object {$_.ID -eq '1074'}
+            Get-WinEvent @Params
         } Catch {
             Write-Error "$($_.Exception.Message)"
         }
