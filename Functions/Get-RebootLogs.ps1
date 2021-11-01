@@ -18,6 +18,11 @@ Function Get-RebootLogs {
         [Parameter()] $ComputerName = $env:COMPUTERNAME,
         [Parameter()] [int] $EventCount
     )
+    Begin {
+        If ($PSBoundParameters.ContainsKey('ComputerName')) {
+            $Credentials = Get-Credential
+        }
+    }
     Process {
         Try {
             $Params = @{
@@ -31,6 +36,9 @@ Function Get-RebootLogs {
             }
             If ($EventCount) {
                 $Params['MaxEvents'] = $EventCount
+            }
+            If ($Credentials) {
+                $Params['Credential'] = $Credentials
             }
             Write-Host "Collecting reboot logs from $($ComputerName)...." -ForegroundColor Cyan
             Get-WinEvent @Params
