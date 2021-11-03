@@ -11,8 +11,10 @@
     AUTHOR: Sam Parris
     CREATION DATE: 28-October-2021
 #>
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseApprovedVerbs", "")]
+param()
 
-Function Get-RebootLogs {
+Function SysAdmin.Get-RebootLogs {
     [CmdletBinding()]
     Param(
         [Parameter()] $ComputerName = $env:COMPUTERNAME,
