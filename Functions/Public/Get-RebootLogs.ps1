@@ -43,7 +43,7 @@ Function SysAdmin.Get-RebootLogs {
                 $Params['Credential'] = $Credentials
             }
             Write-Host "Collecting reboot logs from $($ComputerName)...." -ForegroundColor Cyan
-            Get-WinEvent @Params
+            Get-WinEvent @Params | Format-Table -AutoSize -Wrap
         } Catch {
             Write-Error "$($_.Exception.Message)"
         }
