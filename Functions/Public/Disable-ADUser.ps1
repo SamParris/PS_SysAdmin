@@ -31,7 +31,7 @@ Function SysAdmin.Disable-ADUser {
             Write-Error "$($UserName) is already disabled within Active Directory."
         }
         Else {
-            Write-Host "$($UserName) has been found within Active Directory" -ForegroundColor DarkGreen
+            Write-Host "$($UserName) has been found within Active Directory." -ForegroundColor DarkGreen
             $Credentials = Get-Credential
         }
         Try {
