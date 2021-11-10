@@ -35,15 +35,28 @@ Function SysAdmin.Disable-ADUser {
             $Credentials = Get-Credential
         }
         Try {
-            $NewUserParams = @{
+            $SetUserParams = @{
                 Enabled     = $false
                 Description = "Disabled by $($Credentials.UserName) on $(Get-Date -Format 'dd-MM-yyyy')"
                 Credential  = $Credentials
             }
-            Set-ADUser -Identity $UserName @NewUserParams
+            Set-ADUser -Identity $UserName @SetUserParams
         }
         Catch {
             Write-Error "$($_.Exception.Message) - Line Number: $($_.InvocationInfo.ScriptLineNumber)"
         }
+        Try {
+            $MoveUserParams = @{
+                TargetPath = $DisabledOU
+                Credential = $Credentials
+            }
+            $AllUserInfo | Move-ADObject @MoveUserParams
+        }
+        Catch {
+            Write-Error "$($_.Exception.Message) - Line Number: $($_.InvocationInfo.ScriptLineNumber)"
+        }
+    }
+    End {
+        Write-Host "$($UserName) has been disabled within Active Directory and moved to the Generic-Disabled Accounts OU." -ForegroundColor Magenta
     }
 }
