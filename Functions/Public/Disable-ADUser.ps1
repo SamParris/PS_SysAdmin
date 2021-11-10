@@ -23,11 +23,27 @@ Function SysAdmin.Disable-ADUser {
     Process {
         Try {
             $AllUserInfo = Get-ADUser -Properties * -Identity $UserName
-        } Catch {
+        }
+        Catch {
             Write-Error "$($_.Exception.Message) - Line Number: $($_.InvocationInfo.ScriptLineNumber)"
         }
         If ($AllUserInfo.Enabled -eq $false) {
             Write-Error "$($UserName) is already disabled within Active Directory."
+        }
+        Else {
+            Write-Host "$($UserName) has been found within Active Directory" -ForegroundColor DarkGreen
+            $Credentials = Get-Credential
+        }
+        Try {
+            $NewUserParams = @{
+                Enabled     = $false
+                Description = "Disabled by $($Credentials.UserName) on $(Get-Date -Format 'dd-MM-yyyy')"
+                Credential  = $Credentials
+            }
+            Set-ADUser -Identity $UserName @NewUserParams
+        }
+        Catch {
+            Write-Error "$($_.Exception.Message) - Line Number: $($_.InvocationInfo.ScriptLineNumber)"
         }
     }
 }
