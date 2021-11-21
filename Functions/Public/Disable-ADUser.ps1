@@ -25,13 +25,13 @@ Function SysAdmin.Disable-ADUser {
             $AllUserInfo = Get-ADUser -Properties * -Identity $UserName
         }
         Catch {
-            Write-Error "$($_.Exception.Message) - Line Number: $($_.InvocationInfo.ScriptLineNumber)"
+            Write-Error "[X] $($_.Exception.Message) - Line Number: $($_.InvocationInfo.ScriptLineNumber)"
         }
         If ($AllUserInfo.Enabled -eq $false) {
-            Write-Error "$($UserName) is already disabled within Active Directory."
+            Write-Error "[X] $($UserName) is already disabled within Active Directory."
         }
         Else {
-            Write-Host "$($UserName) has been found within Active Directory." -ForegroundColor Green
+            Write-Host "[+] $($UserName) has been found within Active Directory." -ForegroundColor Green
             $Credentials = Get-Credential
         }
         Try {
@@ -43,7 +43,7 @@ Function SysAdmin.Disable-ADUser {
             Set-ADUser -Identity $UserName @SetUserParams
         }
         Catch {
-            Write-Error "$($_.Exception.Message) - Line Number: $($_.InvocationInfo.ScriptLineNumber)"
+            Write-Error "[X] $($_.Exception.Message) - Line Number: $($_.InvocationInfo.ScriptLineNumber)"
         }
         Try {
             $MoveUserParams = @{
@@ -53,10 +53,10 @@ Function SysAdmin.Disable-ADUser {
             $AllUserInfo | Move-ADObject @MoveUserParams
         }
         Catch {
-            Write-Error "$($_.Exception.Message) - Line Number: $($_.InvocationInfo.ScriptLineNumber)"
+            Write-Error "[X] $($_.Exception.Message) - Line Number: $($_.InvocationInfo.ScriptLineNumber)"
         }
     }
     End {
-        Write-Host "$($UserName) has been disabled within Active Directory and moved to the Generic-Disabled Accounts OU." -ForegroundColor Magenta
+        Write-Host "[+] $($UserName) has been disabled within Active Directory and moved to the Generic-Disabled Accounts OU." -ForegroundColor Magenta
     }
 }
