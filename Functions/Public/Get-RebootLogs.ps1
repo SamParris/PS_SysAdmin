@@ -42,10 +42,10 @@ Function SysAdmin.Get-RebootLogs {
             If ($Credentials) {
                 $Params['Credential'] = $Credentials
             }
-            Write-Host "Collecting reboot logs from $($ComputerName)...." -ForegroundColor Cyan
+            Write-Host "[-] Collecting reboot logs from $($ComputerName)" -ForegroundColor Cyan
             Get-WinEvent @Params | Format-Table -AutoSize -Wrap
         } Catch {
-            Write-Error "$($_.Exception.Message)"
+            Write-Error "[X] $($_.Exception.Message) - Line Number: $($_.InvocationInfo.ScriptLineNumber)"
         }
     }
 }
