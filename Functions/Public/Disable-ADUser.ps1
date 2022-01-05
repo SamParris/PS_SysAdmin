@@ -57,6 +57,6 @@ Function SysAdmin.Disable-ADUser {
         }
     }
     End {
-        Write-Host "[+] $($UserName) has been disabled within Active Directory and moved to the Generic-Disabled Accounts OU." -ForegroundColor Magenta
+        Write-Host "[+] $($UserName) has been disabled within Active Directory and moved to the Generic-Disabled Accounts OU." -ForegroundColor Green
     }
 }
